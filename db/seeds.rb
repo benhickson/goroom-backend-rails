@@ -5,3 +5,13 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+alligator = AnonymousUser.create(display_name: 'Alligator')
+pizza = AnonymousUser.create(display_name: 'Pizza')
+stapler = AnonymousUser.create(display_name: 'Stapler')
+
+ben = User.create(email: 'ben@thegoroom.com', display_name: 'Ben')
+jared = User.create(email: 'jared@thegoroom.com', display_name: 'Jared')
+zane = User.create(email: 'zane@thegoroom.com', display_name: 'Zane')
+
+User.create()
