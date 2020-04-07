@@ -34,5 +34,3 @@ Membership.create(user: jared, group: groupTheTeam)
 Membership.create(user: zane, group: groupTheTeam)
 
 Room.create(name: 'NeverClosed', creator: ben)
-
-
