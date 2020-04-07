@@ -6,12 +6,33 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-alligator = AnonymousUser.create(display_name: 'Alligator')
-pizza = AnonymousUser.create(display_name: 'Pizza')
-stapler = AnonymousUser.create(display_name: 'Stapler')
+alligatorUser = User.create
+pizzaUser = User.create
+staplerUser = User.create
+
+AnonymousUser.create(display_name: 'Alligator', user: alligatorUser)
+AnonymousUser.create(display_name: 'Pizza', user: pizzaUser)
+AnonymousUser.create(display_name: 'Stapler', user: staplerUser)
 
 ben = User.create(email: 'ben@thegoroom.com', display_name: 'Ben')
 jared = User.create(email: 'jared@thegoroom.com', display_name: 'Jared')
 zane = User.create(email: 'zane@thegoroom.com', display_name: 'Zane')
 
-User.create()
+groupBenZane = Group.create(name: 'Ben and Zane')
+groupJaredZane = Group.create(name: 'Jared and Zane')
+groupBenJared = Group.create(name: 'Ben and Jared')
+groupTheTeam = Group.create(name: 'The Team')
+
+Membership.create(user: ben, group: groupBenZane)
+Membership.create(user: zane, group: groupBenZane)
+Membership.create(user: jared, group: groupJaredZane)
+Membership.create(user: zane, group: groupJaredZane)
+Membership.create(user: ben, group: groupBenJared)
+Membership.create(user: jared, group: groupBenJared)
+Membership.create(user: ben, group: groupTheTeam)
+Membership.create(user: jared, group: groupTheTeam)
+Membership.create(user: zane, group: groupTheTeam)
+
+Room.create(name: 'NeverClosed', creator: ben)
+
+
