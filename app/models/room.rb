@@ -1,3 +1,3 @@
 class Room < ApplicationRecord
-  belongs_to :created_by, :class_name => 'User', :foreign_key => 'user_id'
+  belongs_to :creator, :class_name => 'User'
 end

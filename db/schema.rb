@@ -12,13 +12,12 @@
 
 ActiveRecord::Schema.define(version: 2020_04_06_203734) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "anonymous_users", force: :cascade do |t|
     t.string "display_name"
+    t.integer "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_anonymous_users_on_user_id"
   end
 
   create_table "groups", force: :cascade do |t|
@@ -28,8 +27,8 @@ ActiveRecord::Schema.define(version: 2020_04_06_203734) do
   end
 
   create_table "memberships", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "group_id", null: false
+    t.integer "user_id", null: false
+    t.integer "group_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["group_id"], name: "index_memberships_on_group_id"
@@ -38,11 +37,11 @@ ActiveRecord::Schema.define(version: 2020_04_06_203734) do
 
   create_table "rooms", force: :cascade do |t|
     t.string "name"
-    t.bigint "created_by_id", null: false
+    t.integer "creator_id", null: false
     t.datetime "closed_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["created_by_id"], name: "index_rooms_on_created_by_id"
+    t.index ["creator_id"], name: "index_rooms_on_creator_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -51,12 +50,10 @@ ActiveRecord::Schema.define(version: 2020_04_06_203734) do
     t.string "password_digest"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "anonymous_user_id"
-    t.index ["anonymous_user_id"], name: "index_users_on_anonymous_user_id"
   end
 
+  add_foreign_key "anonymous_users", "users"
   add_foreign_key "memberships", "groups"
   add_foreign_key "memberships", "users"
-  add_foreign_key "rooms", "users", column: "created_by_id"
-  add_foreign_key "users", "anonymous_users"
+  add_foreign_key "rooms", "users", column: "creator_id"
 end
