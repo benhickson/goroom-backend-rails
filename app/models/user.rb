@@ -13,4 +13,9 @@ class User < ApplicationRecord
 	has_many :rooms, foreign_key: 'creator_id'
 	has_many :memberships
 	has_many :groups, through: :memberships
+
+	def open_rooms
+		self.rooms.where('closed_at IS NULL')
+	end
+
 end

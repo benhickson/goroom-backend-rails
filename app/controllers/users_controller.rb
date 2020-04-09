@@ -2,7 +2,11 @@ class UsersController < ApiController
 
 	def show
 		set_instance
-		render json: @user
+		render json: {
+			id: @user.id, 
+			email: @user.email,
+			rooms: @user.open_rooms.select(:id, :name)
+		}
 	end
 
 	private
