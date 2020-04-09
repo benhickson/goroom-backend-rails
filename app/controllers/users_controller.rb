@@ -1,4 +1,4 @@
-class UsersController < ApiController
+class UsersController < ApplicationController
 
 	def show
 		set_instance

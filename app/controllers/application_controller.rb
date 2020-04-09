@@ -1,4 +1,6 @@
-class ApplicationController < ActionController::Base
+# enable Base instead of API to enable templates and other things
+# class ApplicationController < ActionController::Base
+class ApplicationController < ActionController::API
 
 	# make methods here available to other controllers:
 	# helper_method :logged_in?, :current_user
