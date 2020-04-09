@@ -4,8 +4,8 @@ class RoomsController < ApplicationController
 		render json: Room.open
 	end
 	
-	def new
-	end
+	# def new
+	# end
 
 	def create
 		# TODO: add creator/creator_id via JWT
@@ -40,14 +40,14 @@ class RoomsController < ApplicationController
 		end
 	end
 
-	def join
-		@room = Room.find_by(closed_at: nil, name: params[:name])
-		if @room
-			# render normally
-		else
-			@attempted_name = params[:name]
-			render :new
-		end
-	end
+	# def join
+	# 	@room = Room.find_by(closed_at: nil, name: params[:name])
+	# 	if @room
+	# 		# render normally
+	# 	else
+	# 		@attempted_name = params[:name]
+	# 		render :new
+	# 	end
+	# end
 
 end
