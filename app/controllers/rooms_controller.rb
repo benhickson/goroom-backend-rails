@@ -8,8 +8,16 @@ class RoomsController < ApplicationController
 	end
 
 	def create
-		# room = Room.create	# add the user id
-		# redirect_to room
+		# TODO: add creator/creator_id via JWT
+		creator = User.find(1)
+
+		room = Room.new(name: params[:name], creator: creator)
+		if room.valid?
+			room.save
+			render json: room
+		else
+			render json: {success: false, attempted_name: params[:name], message: room.errors.full_messages}
+		end
 	end
 
 	def show
