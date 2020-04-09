@@ -1,11 +1,10 @@
 class RoomsController < ApplicationController
 
 	def index
-		render json: Room.all
+		render json: Room.open
 	end
 	
 	def new
-		
 	end
 
 	def create
@@ -14,7 +13,27 @@ class RoomsController < ApplicationController
 	end
 
 	def show
-		set_instance
+		render json: Room.find(params[:id])
+	end
+
+	def update
+		room = Room.find(params[:id])
+		room.update(name: params[:name])
+		render json: room
+	end
+
+	def destroy
+		room = Room.find(params[:id])
+		room.update(closed_at: Time.now())
+		if room.closed_at
+			render json: {success: true, room_id: params[:id], message: 'room closed'}
+		else
+			render json: {success: false, room_id: params[:id], message: room.errors.full_messages}
+		end
+	end
+
+	def join
+		@room = Room.find_by(closed_at: nil, name: params[:name])
 		if @room
 			# render normally
 		else
@@ -23,13 +42,4 @@ class RoomsController < ApplicationController
 		end
 	end
 
-	private
-
-	def set_instance
-		if params[:name]
-			@room = Room.find_by(closed_at: nil, name: params[:name])
-		else
-			@room = Room.new
-		end
-	end
 end
