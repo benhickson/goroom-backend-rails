@@ -23,7 +23,7 @@ class RoomsController < ApplicationController
 	end
 
 	def show_name
-		render json: Room.find_by(name: params[:name]), status: :ok
+		render json: Room.find_by(name: params[:name], closed_at: nil), status: :ok
 	end
 
 	def update
