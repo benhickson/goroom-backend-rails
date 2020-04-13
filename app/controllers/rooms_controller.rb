@@ -19,7 +19,11 @@ class RoomsController < ApplicationController
 	end
 
 	def show
-		render json: Room.find(params[:id])
+		render json: Room.find(name: params[:id]), status: :ok
+	end
+
+	def show_name
+		render json: Room.find_by(name: params[:name]), status: :ok
 	end
 
 	def update
