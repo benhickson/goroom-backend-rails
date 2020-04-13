@@ -25,13 +25,12 @@ class UsersController < ApplicationController
 	def create
 		# transition anonymous account to full account
 		updateStatus = @current_user.update(email: params[:email], display_name: params[:display_name], password: params[:password])
-		byebug
 		if updateStatus
+			# delete the associated anonymous user
 			@current_user.anonymous_user.destroy
-			byebug
 			render json: {status: 'User created successfully'}, status: :created
 		else
-			render json: {errors: user.errors.full_messages}, status: :conflict
+			render json: {errors: @current_user.errors.full_messages}, status: :conflict
 		end
 	end
 
