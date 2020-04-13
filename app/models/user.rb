@@ -8,6 +8,8 @@ class User < ApplicationRecord
 	# Since we are creating Users without passwords initially, and linking them to AnonymousUsers,
 	# we must allow presence:false on the :password setter (targeting the password_digest field).
 
+	validates_uniqueness_of :email, allow_nil: true
+
 	has_one :anonymous_user
 
 	has_many :rooms, foreign_key: 'creator_id'
@@ -16,6 +18,14 @@ class User < ApplicationRecord
 
 	def open_rooms
 		self.rooms.where('closed_at IS NULL')
+	end
+
+	def anon_display_name
+		if self.anonymous_user
+			self.anonymous_user.display_name
+		else
+			nil
+		end
 	end
 
 end

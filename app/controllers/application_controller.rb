@@ -1,29 +1,40 @@
-# enable Base instead of API to enable templates and other things
+# toggle these lines to use ::Base instead of ::API to enable templates and other things
 # class ApplicationController < ActionController::Base
 class ApplicationController < ActionController::API
 
-	# make methods here available to other controllers:
-	# helper_method :logged_in?, :current_user
+	require 'json_web_token'
 
-	# run these methods before any controller action
-	# before_action :redirect_if_not_authorized
-	# before_action :set_current_user
+	# run this on all controller actions
+	before_action :authenticate_request
 
-	private
+	# Validates the token and user and sets the @current_user scope
+	def authenticate_request
 
-	def set_current_user
-		if session[:user_id]
-			@user = User.find(session[:user_id])
+		# if there's an auth header set
+		if auth_header = request.headers['Authorization']
+			# remove 'Bearer ' from the string
+			token = auth_header.split(' ').last
+			# decode it
+			jwt_payload = JsonWebToken.decode(token)
+
+			# if the payload is valid
+			if jwt_payload && JsonWebToken.valid_payload(jwt_payload[0])
+				# set the user
+				@current_user = User.find_by(id: jwt_payload[0]['user_id'])
+			else
+				# invalid payload
+				renter json: {success: false, message: 'invalid payload'}, status: :bad_request and return
+				
+				# ALT option, will create anon user and return that JWT token
+				# redirect_to users_anon_path and return
+			end
+		else
+			# no header set
+			render json: {success: false, message: 'no auth header set'}, status: :bad_request and return
+				
+			# ALT option, will create anon user and return that JWT token
+			# redirect_to users_anon_path and return
 		end
-	end
-
-	def redirect_if_not_authorized
-		redirect_to login_path unless logged_in?
-	end
-
-	# helper method for #redirect_if_not_authorized
-	def logged_in?
-		!!current_user
 	end
 
 end
