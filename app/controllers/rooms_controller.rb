@@ -1,10 +1,10 @@
 class RoomsController < ApplicationController
 
 	def index
-		render json: Room.open, status: :ok
+		render json: Room.open_and_created_by(@current_user), status: :ok
 	end
 	
-	# route disabled - use Angular
+	# route disabled - use Angular to make a rooms/new view
 	# def new
 	# end
 
