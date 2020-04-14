@@ -6,17 +6,9 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-alligatorUser = User.create
-pizzaUser = User.create
-staplerUser = User.create
-
-AnonymousUser.create(display_name: 'Alligator', user: alligatorUser)
-AnonymousUser.create(display_name: 'Pizza', user: pizzaUser)
-AnonymousUser.create(display_name: 'Stapler', user: staplerUser)
-
-ben = User.create(email: 'ben@thegoroom.com', display_name: 'Ben')
-jared = User.create(email: 'jared@thegoroom.com', display_name: 'Jared')
-zane = User.create(email: 'zane@thegoroom.com', display_name: 'Zane')
+ben = User.create(email: 'ben@thegoroom.com', password: 'mypassword', display_name: 'Ben')
+jared = User.create(email: 'jared@thegoroom.com', password: 'mypassword', display_name: 'Jared')
+zane = User.create(email: 'zane@thegoroom.com', password: 'mypassword', display_name: 'Zane')
 
 groupBenZane = Group.create(name: 'Ben and Zane')
 groupJaredZane = Group.create(name: 'Jared and Zane')
@@ -33,6 +25,10 @@ Membership.create(user: ben, group: groupTheTeam)
 Membership.create(user: jared, group: groupTheTeam)
 Membership.create(user: zane, group: groupTheTeam)
 
-Room.create(name: 'NeverClosed', creator: ben)
-Room.create(name: '2econd-room', creator: ben)
-Room.create(name: 'always-open', creator: jared)
+Room.create(name: 'party-room', creator: ben)
+Room.create(name: 'HudsonChat', creator: ben)
+Room.create(name: 'PRL-Episode-Recorder', creator: jared)
+Room.create(name: 'pokernight', creator: jared)
+Room.create(name: 'prl-off-the-record', creator: jared)
+Room.create(name: 'cowboy', creator: zane)
+Room.create(name: 'poker', creator: zane)
