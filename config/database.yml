@@ -24,6 +24,3 @@ production:
   <<: *default
   adapter: mysql2
   encoding: utf8
-  database: goroom
-  username: goroom-rails
-  password: Go-pokerchat
