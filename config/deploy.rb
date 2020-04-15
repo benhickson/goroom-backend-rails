@@ -3,6 +3,7 @@ lock "~> 3.12.1"
 
 set :application, "goroom-backend-rails"
 set :repo_url, "git@github.com:benhickson/goroom-backend-rails.git"
+set :branch, 'deploy'
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
