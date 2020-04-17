@@ -7,6 +7,7 @@ class UsersController < ApplicationController
 		user = User.find(params[:id])
 		render json: {
 			id: user.id, 
+			email: user.email,
 			display_name: user.display_name,
 			anon_display_name: user.anon_display_name
 		}, status: :ok
