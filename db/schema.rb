@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_06_203734) do
+ActiveRecord::Schema.define(version: 2020_04_18_022842) do
 
   create_table "anonymous_users", force: :cascade do |t|
     t.string "display_name"
@@ -18,6 +18,14 @@ ActiveRecord::Schema.define(version: 2020_04_06_203734) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_anonymous_users_on_user_id"
+  end
+
+  create_table "connections", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "ip_address"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_connections_on_user_id"
   end
 
   create_table "groups", force: :cascade do |t|
@@ -53,6 +61,7 @@ ActiveRecord::Schema.define(version: 2020_04_06_203734) do
   end
 
   add_foreign_key "anonymous_users", "users"
+  add_foreign_key "connections", "users"
   add_foreign_key "memberships", "groups"
   add_foreign_key "memberships", "users"
   add_foreign_key "rooms", "users", column: "creator_id"

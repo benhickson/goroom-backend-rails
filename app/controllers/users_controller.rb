@@ -21,6 +21,9 @@ class UsersController < ApplicationController
 			display_name: user.display_name,
 			anon_display_name: user.anon_display_name
 		}, status: :ok
+
+		# log the connection
+		Connection.create(user: user, ip_address: request.remote_ip)
 	end
 	
 	# create/register a user
