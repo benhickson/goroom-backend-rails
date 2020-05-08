@@ -50,7 +50,10 @@ class UsersController < ApplicationController
 		user = User.find_by(email: params[:email].to_s.downcase)
 		# check that the user exists and the pasword is correct
 		if user && user.authenticate(params[:password])
-			render json: {auth_token: JsonWebToken.encode({user_id: user.id})}, status: :ok
+			render json: {auth_token: JsonWebToken.encode({
+				user_id: user.id, 
+				user_name: user.display_name
+			})}, status: :ok
 		else
 			render json: {error: 'Invalid email or password'}, status: :unauthorized
 		end
@@ -60,7 +63,10 @@ class UsersController < ApplicationController
 	def anon
 		new_anon_user = User.create
 		AnonymousUser.create(display_name: AnonymousUser.random_name, user: new_anon_user)
-		render json: {auth_token: JsonWebToken.encode({user_id: new_anon_user.id})}, status: :ok
+		render json: {auth_token: JsonWebToken.encode({
+			user_id: new_anon_user.id,
+			user_name: "Anonymous #{new_anon_user.anon_display_name.capitalize}"
+		})}, status: :ok
 	end
 
 end
