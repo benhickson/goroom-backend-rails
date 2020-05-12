@@ -48,7 +48,7 @@ class UsersController < ApplicationController
 
 		# get a user by the email supplied
 		user = User.find_by(email: params[:email].to_s.downcase)
-		# check that the user exists and the pasword is correct
+		# check that the user exists and the password is correct
 		if user && user.authenticate(params[:password])
 			render json: {auth_token: JsonWebToken.encode({
 				user_id: user.id, 
