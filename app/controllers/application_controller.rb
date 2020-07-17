@@ -15,7 +15,11 @@ class ApplicationController < ActionController::API
 			# remove 'Bearer ' from the string
 			token = auth_header.split(' ').last
 			# decode it
-			jwt_payload = JsonWebToken.decode(token)
+			begin
+				jwt_payload = JsonWebToken.decode(token)
+			rescue JWT::ExpiredSignature
+				jwt_payload = false
+			end
 
 			# if the payload is valid
 			if jwt_payload && JsonWebToken.valid_payload(jwt_payload[0])
@@ -23,10 +27,10 @@ class ApplicationController < ActionController::API
 				@current_user = User.find_by(id: jwt_payload[0]['user_id'])
 			else
 				# invalid payload
-				renter json: {success: false, message: 'invalid payload'}, status: :bad_request and return
+				# render json: {success: false, message: 'invalid payload'}, status: :bad_request and return
 				
 				# ALT option, will create anon user and return that JWT token
-				# redirect_to users_anon_path and return
+				redirect_to users_anon_path and return
 			end
 		else
 			# no header set
